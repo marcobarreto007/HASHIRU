@@ -1,0 +1,19 @@
+Busca: Claude AI 2025 features site:arxiv.org OR site:github.com OR site:docs.python.org
+Data: 2025-08-04T09:17:31.744744
+URL: https://duckduckgo.com/html/?q=Claude+AI+2025+features+site%3Aarxiv.org+OR+site%3Agithub.com+OR+site%3Adocs.python.org
+
+RESULTADOS:
+1. EndlessClaude - GitHub
+   🔗 //duckduckgo.com/l/?uddg=https%3A%2F%2Fgithub.com%2Fusualdork%2FEndlessClaude&rut=9bb8657fd85a346765f34049746dad76fd40037746db9c14754cee21b0e5f679
+
+2. GitHub - richards199999/Thinking-Claude: Let your Claude able to think
+   🔗 //duckduckgo.com/l/?uddg=https%3A%2F%2Fgithub.com%2Frichards199999%2FThinking%2DClaude&rut=c111fc4c4dd3caf39d452cb4a2073f2f4c0c073408781ecee84e013c2d8fb411
+
+3. Supported AI models in Copilot - GitHub Docs
+   🔗 //duckduckgo.com/l/?uddg=https%3A%2F%2Fdocs.github.com%2Fcopilot%2Fusing%2Dgithub%2Dcopilot%2Fusing%2Dclaude%2Dsonnet%2Din%2Dgithub%2Dcopilot&rut=500c8adc87fe5a8bdc390293784aead1e656ff7d94caf705d63c623201bd13f5
+
+4. GitHub - musistudio/claude-code-router: Use Claude Code as the ...
+   🔗 //duckduckgo.com/l/?uddg=https%3A%2F%2Fgithub.com%2Fmusistudio%2Fclaude%2Dcode%2Drouter&rut=394cc6ab64e0a669ca01f9e6314446d96f89206a9cebb0c90c4556d903f3b4f2
+
+5. Awesome Claude Prompts - GitHub
+   🔗 //duckduckgo.com/l/?uddg=https%3A%2F%2Fgithub.com%2Flanggptai%2Fawesome%2Dclaude%2Dprompts&rut=9b0e6caeba3628635a60566dda5be5d5bb4ba295cf14d0b1dee3ee67ff228894

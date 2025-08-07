@@ -1,0 +1,23 @@
+# Core dependencies
+chainlit>=2.6.3
+dependency-injector>=4.48.1
+pydantic>=2.10.0
+pydantic-settings>=2.6.0
+structlog>=24.4.0
+rich>=13.9.0
+
+# Hardware monitoring
+pynvml>=11.5.3
+psutil>=6.1.0
+
+# Async utilities
+aiofiles>=24.1.0
+asyncio-mqtt>=0.16.2
+
+# Performance
+uvloop>=0.21.0; sys_platform != "win32"
+orjson>=3.10.0
+
+# Optional extras
+httpx>=0.28.0
+redis>=5.2.0
