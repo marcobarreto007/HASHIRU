@@ -98,3 +98,5 @@ artifacts/
 # backups
 backups/
 *.backup
+legacy/
+legacy/
