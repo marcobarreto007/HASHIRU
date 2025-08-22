@@ -10,3 +10,5 @@ duckduckgo-search==8.1.1
 trafilatura==2.0.0
 aiohttp==3.12.15
 send2trash==1.8.3
+httpx==0.27.0
+redis>=4.2.0
