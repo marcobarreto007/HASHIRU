@@ -12,7 +12,7 @@ from typing import Optional, Any, Dict
 import redis.asyncio as redis
 from redis.exceptions import ConnectionError
 from pydantic import BaseModel
-from .metrics import CACHE_HITS, CACHE_MISSES
+from api.metrics import CACHE_HITS, CACHE_MISSES
 
 # Configurar um logger para este módulo
 logger = logging.getLogger(__name__)

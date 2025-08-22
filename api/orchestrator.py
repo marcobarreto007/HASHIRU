@@ -12,15 +12,15 @@ from typing import Dict, Any, Type, Union
 
 from pydantic import BaseModel, ValidationError
 
-from .llm_client import OllamaClient, OllamaError
+from api.llm_client import OllamaClient, OllamaError
 
 # Importar todos os schemas e templates de prompt dos experts
-from .experts.technical_analyst import TECHNICAL_ANALYSIS_PROMPT_TEMPLATE, TechnicalAnalysisSignal
-from .experts.fundamental_analyst import FUNDAMENTAL_ANALYSIS_PROMPT_TEMPLATE, FundamentalAnalysisSignal
-from .experts.macro_analyst import MACRO_ANALYSIS_PROMPT_TEMPLATE, MacroAnalysisSignal
-from .experts.risk_analyst import RISK_ANALYSIS_PROMPT_TEMPLATE, RiskAnalysisSignal
-from .experts.sentiment_analyst import SENTIMENT_ANALYSIS_PROMPT_TEMPLATE, SentimentAnalysisSignal
-from .experts.crypto_analyst import CRYPTO_ANALYSIS_PROMPT_TEMPLATE, CryptoAnalysisSignal
+from api.experts.technical_analyst import TECHNICAL_ANALYSIS_PROMPT_TEMPLATE, TechnicalAnalysisSignal
+from api.experts.fundamental_analyst import FUNDAMENTAL_ANALYSIS_PROMPT_TEMPLATE, FundamentalAnalysisSignal
+from api.experts.macro_analyst import MACRO_ANALYSIS_PROMPT_TEMPLATE, MacroAnalysisSignal
+from api.experts.risk_analyst import RISK_ANALYSIS_PROMPT_TEMPLATE, RiskAnalysisSignal
+from api.experts.sentiment_analyst import SENTIMENT_ANALYSIS_PROMPT_TEMPLATE, SentimentAnalysisSignal
+from api.experts.crypto_analyst import CRYPTO_ANALYSIS_PROMPT_TEMPLATE, CryptoAnalysisSignal
 
 # Configurar um logger para este módulo
 logger = logging.getLogger(__name__)
@@ -141,7 +141,7 @@ class AnalysisOrchestrator:
         A lógica de agregação inicial é baseada em uma contagem de votos, com
         modificadores de risco e macro.
         """
-        from .decision_models import AggregateDecision
+        from api.decision_models import AggregateDecision
         from collections import Counter
 
         votes = []

@@ -33,10 +33,11 @@ except ImportError:
 
 
 # Import dos componentes da aplicação
-from .orchestrator import AnalysisOrchestrator, OllamaError
-from .cache_manager import cache_manager
+from api.orchestrator import AnalysisOrchestrator, OllamaError
+from api.llm_client import OllamaClient
+from api.cache_manager import cache_manager
 from contextlib import asynccontextmanager
-from .decision_models import AggregateDecision, HealthStatus
+from api.decision_models import AggregateDecision, HealthStatus
 from prometheus_client import generate_latest, CONTENT_TYPE_LATEST
 from starlette.responses import Response
 
