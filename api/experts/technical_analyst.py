@@ -39,6 +39,8 @@ class TechnicalAnalysisSignal(BaseModel):
     def upper_case_signal(cls, v):
         return v.upper()
 
+from api.experts.base import ExpertDefinition
+
 # Prompt para o Expert de Análise Técnica
 # Este prompt foi cuidadosamente desenhado para forçar o LLM a retornar um JSON estruturado.
 TECHNICAL_ANALYSIS_PROMPT_TEMPLATE = """
@@ -106,3 +108,11 @@ Realize uma análise técnica overnight para o ticker **{ticker}**. Com base na 
 
 Agora, execute a análise para o ticker `{ticker}` com base na seguinte consulta do usuário: "{query}"
 """
+
+# Definição do expert para ser descoberto pelo orquestrador
+expert_definition = ExpertDefinition(
+    name="technical",
+    prompt_template=TECHNICAL_ANALYSIS_PROMPT_TEMPLATE,
+    response_model=TechnicalAnalysisSignal,
+    model_name="phinance-instruct"  # Modelo especialista em finanças
+)

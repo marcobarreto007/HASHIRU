@@ -10,6 +10,8 @@ from pydantic import BaseModel, Field
 from enum import Enum
 from typing import List, Optional
 
+from api.experts.base import ExpertDefinition
+
 class SignalEnum(str, Enum):
     """Enumeração dos possíveis sinais de negociação."""
     BUY = "BUY"
@@ -94,3 +96,11 @@ Realize uma análise fundamentalista para o ticker **{ticker}**. Com base na sua
 
 Agora, execute a análise para o ticker `{ticker}` com base na seguinte consulta do usuário: "{query}"
 """
+
+# Definição do expert para ser descoberto pelo orquestrador
+expert_definition = ExpertDefinition(
+    name="fundamental",
+    prompt_template=FUNDAMENTAL_ANALYSIS_PROMPT_TEMPLATE,
+    response_model=FundamentalAnalysisSignal,
+    model_name="phinance-instruct"  # Modelo especialista em finanças
+)

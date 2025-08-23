@@ -10,6 +10,8 @@ from pydantic import BaseModel, Field
 from enum import Enum
 from typing import List
 
+from api.experts.base import ExpertDefinition
+
 class RiskLevelEnum(str, Enum):
     """Enumeração dos possíveis níveis de risco."""
     LOW = "LOW"
@@ -88,3 +90,11 @@ Realize uma análise de risco para o ticker **{ticker}**. Com base na sua análi
 
 Agora, execute a análise para o ticker `{ticker}` com base na seguinte consulta do usuário: "{query}"
 """
+
+# Definição do expert para ser descoberto pelo orquestrador
+expert_definition = ExpertDefinition(
+    name="risk",
+    prompt_template=RISK_ANALYSIS_PROMPT_TEMPLATE,
+    response_model=RiskAnalysisSignal,
+    model_name="phinance-instruct"  # Modelo especialista em finanças
+)
