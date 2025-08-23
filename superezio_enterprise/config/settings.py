@@ -54,6 +54,15 @@ class ChainlitConfig(BaseModel):
     session_timeout: int = Field(default=3600, description="Session timeout in seconds")
 
 
+class AIModelConfig(BaseModel):
+    """AI model configuration."""
+    default_vram_mb: int = Field(default=4096, description="Default VRAM allocation per model in MB")
+    core_models: List[str] = Field(
+        default=["reasoning", "code", "conversation", "tools"],
+        description="List of core AI models to load."
+    )
+
+
 class Settings(BaseSettings):
     """Main application settings."""
     
@@ -80,6 +89,7 @@ class Settings(BaseSettings):
     rate_limiter: RateLimiterConfig = Field(default_factory=RateLimiterConfig)
     circuit_breaker: CircuitBreakerConfig = Field(default_factory=CircuitBreakerConfig)
     chainlit: ChainlitConfig = Field(default_factory=ChainlitConfig)
+    ai_models: AIModelConfig = Field(default_factory=AIModelConfig)
     
     # Advanced settings
     async_pool_size: int = Field(default=10, description="Async pool size")
