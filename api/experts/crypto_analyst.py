@@ -10,6 +10,8 @@ from pydantic import BaseModel, Field
 from enum import Enum
 from typing import List, Optional
 
+from api.experts.base import ExpertDefinition
+
 class CryptoSignalEnum(str, Enum):
     """Enumeração dos possíveis sinais de negociação para cripto."""
     BUY = "BUY"
@@ -101,3 +103,11 @@ Primeiro, determine se o ticker **{ticker}** é um criptoativo. Se for, realize 
 
 Agora, execute a análise para o ticker `{ticker}` com base na seguinte consulta do usuário: "{query}"
 """
+
+# Definição do expert para ser descoberto pelo orquestrador
+expert_definition = ExpertDefinition(
+    name="crypto",
+    prompt_template=CRYPTO_ANALYSIS_PROMPT_TEMPLATE,
+    response_model=CryptoAnalysisSignal,
+    model_name="phinance-instruct"  # Modelo especialista em finanças
+)

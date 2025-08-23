@@ -10,6 +10,8 @@ from pydantic import BaseModel, Field
 from enum import Enum
 from typing import List
 
+from api.experts.base import ExpertDefinition
+
 class MacroSignalEnum(str, Enum):
     """Enumeração dos possíveis impactos macroeconômicos."""
     POSITIVE_IMPACT = "POSITIVE_IMPACT"
@@ -83,3 +85,11 @@ Realize uma análise macroeconômica focada no impacto para o ticker **{ticker}*
 
 Agora, execute a análise para o ticker `{ticker}` com base na seguinte consulta do usuário: "{query}"
 """
+
+# Definição do expert para ser descoberto pelo orquestrador
+expert_definition = ExpertDefinition(
+    name="macro",
+    prompt_template=MACRO_ANALYSIS_PROMPT_TEMPLATE,
+    response_model=MacroAnalysisSignal,
+    model_name="phinance-instruct"  # Modelo especialista em finanças
+)
