@@ -48,8 +48,8 @@ if str(ROOT) not in sys.path:
 try:
     from autonomous_config import config, get_ai_model, get_fallback_models
     logger.info("✅ Configuração otimizada carregada do autonomous_config.py")
-    logger.info(f"🎯 Hardware: {config.ollama.hardware.gpu_primary} + {config.ollama.hardware.gpu_secondary}")
-    logger.info(f"💾 VRAM Total: {config.ollama.hardware.total_vram_gb}GB")
+    logger.info(f"🎯 Modelos: reasoning={config.ollama.reasoning_model}, code={config.ollama.code_model}")
+    logger.info(f"💾 Base URL: {config.ollama.base_url}")
 except ImportError:
     logger.warning("⚠️ autonomous_config.py não encontrado. Usando configuração básica.")
     # Fallback básico
@@ -137,6 +137,8 @@ class SuperEzioCommandRegistry:
             "models": ("🤖 Listar modelos disponíveis", self._models_handler),
             "hardware": ("💻 Informações de hardware", self._hardware_handler),
             "version": ("📋 Versão do SUPEREZIO", self._version_handler),
+            "capabilities": ("🌟 Capacidades do SUPEREZIO", self._capabilities_handler),
+            "capacidades": ("🌟 Capacidades do SUPEREZIO", self._capabilities_handler),
         }
         
         for cmd, (desc, handler) in basic_commands.items():
@@ -297,6 +299,91 @@ class SuperEzioCommandRegistry:
 """
         except:
             return "🌟 SUPEREZIO v1.0 - Interface Cognitiva"
+
+    def _capabilities_handler(self, args: str) -> str:
+        """Explicação completa das capacidades do SUPEREZIO."""
+        return f"""# 🌟 O que o SUPEREZIO é capaz de fazer
+
+## 🤖 **CAPACIDADES PRINCIPAIS**
+
+### **🔧 AUTOMAÇÃO INTELIGENTE**
+- **Automação Web**: Navegação, busca, extração de dados com Selenium
+- **Controle Desktop**: PyAutoGUI para mouse, teclado e screenshots
+- **Pesquisa Automatizada**: Multi-fonte com análise e síntese de conteúdo
+- **Gestão de Arquivos**: Operações cross-platform com organização inteligente
+
+### **💻 GERAÇÃO E ANÁLISE DE CÓDIGO**
+- **Múltiplas Linguagens**: Python, JavaScript, Java, C++, e mais
+- **Debug Especializado**: Análise de erros e soluções automáticas
+- **Refatoração**: Otimização e melhoria de código existente
+- **Documentação**: Geração automática de docs técnicas
+
+### **🧠 ANÁLISE DE DADOS E IA**
+- **Machine Learning**: Análise com Pandas, NumPy, Scikit-learn
+- **Processamento de Imagens**: OpenCV, PIL para manipulação visual
+- **APIs e Integração**: REST, GraphQL, webhooks automáticos
+- **Big Data**: Processamento de grandes volumes com otimização
+
+### **🚀 RECURSOS ENTERPRISE**
+- **Arquitetura Assíncrona**: Performance otimizada para milhares de operações
+- **Circuit Breakers**: Proteção contra falhas em cascata
+- **Cache Inteligente**: Sistema LRU com TTL para respostas rápidas
+- **Rate Limiting**: Controle de uso e proteção contra sobrecarga
+- **Logging Estruturado**: Rastreamento distribuído com correlation IDs
+
+## 🎯 **MODELOS ESPECIALIZADOS**
+
+- **🧠 Reasoning**: `{get_ai_model('reasoning')}` - Análise complexa e raciocínio
+- **💻 Code**: `{get_ai_model('code')}` - Geração e debug de código
+- **💬 Conversation**: `{get_ai_model('conversation')}` - Diálogo natural inteligente
+- **🛠️ Tools**: `{get_ai_model('tools')}` - Automação e ferramentas
+
+## ⚡ **COMANDOS DISPONÍVEIS**
+
+### **Automação**
+- `/auto_research <tópico>` - Pesquisa profunda multi-fonte
+- `/auto_search <termo>` - Busca avançada na web
+- `/auto_screenshot` - Captura e análise de tela
+- `/auto_status` - Status completo do sistema
+
+### **Desenvolvimento**
+- `/code <especificação>` - Geração de código especializado
+- `/debug <problema>` - Análise e solução de bugs
+- `/analyze <dados>` - Análise profunda de dados
+- `/plan <objetivo>` - Planejamento estratégico
+
+### **Sistema**
+- `/config` - Configurações enterprise
+- `/metrics` - Métricas de performance
+- `/health` - Diagnóstico completo
+- `/help` - Lista completa de comandos
+
+## 💾 **HARDWARE OTIMIZADO**
+
+- **GPU Principal**: RTX 3060 (12GB VRAM)
+- **GPU Secundária**: RTX 2060 (6GB VRAM)
+- **Total**: 18GB VRAM com balanceamento automático
+- **Quantização**: Suporte completo para modelos grandes
+
+## 🌐 **INTERAÇÃO FLEXÍVEL**
+
+**1. Comandos Diretos**: Use `/comando` para ações específicas
+**2. Linguagem Natural**: Pergunte naturalmente como "analise estes dados"
+**3. Conversação**: Chat inteligente para explorar ideias
+**4. Automação**: Tarefas complexas executadas automaticamente
+
+## 🔒 **SEGURANÇA E CONFIABILIDADE**
+
+- **Sanitização de Inputs**: Proteção contra injeção
+- **Session Management**: Estado persistente e seguro
+- **Error Recovery**: Fallbacks automáticos para alta disponibilidade
+- **Observabilidade**: Monitoramento completo em tempo real
+
+---
+
+**🚀 O SUPEREZIO é seu assistente cognitivo completo para automação, desenvolvimento, análise e muito mais!**
+
+*Para começar, experimente: `/auto_research Python automation best practices 2025`*"""
 
     async def dispatch(self, command: str, args: str = "") -> str:
         """Executa comando com error handling robusto."""
@@ -483,6 +570,18 @@ class SuperEzioAgent:
         if user_input.startswith("/"):
             return {"tipo": "direct_command", "auto_execute": True}
         
+        # Detecção simples de perguntas sobre capacidades
+        user_lower = user_input.lower()
+        capability_keywords = [
+            "o que você", "o que vc", "what can you", "what are you capable",
+            "capacidades", "capabilities", "que você faz", "que vc faz",
+            "o que pode fazer", "what do you do", "funcionalidades",
+            "que consegue", "pode fazer", "sabe fazer"
+        ]
+        
+        if any(keyword in user_lower for keyword in capability_keywords):
+            return {"tipo": "capability_question", "confidence": 0.9}
+        
         if httpx is None:
             return {"tipo": "general", "confidence": 0.5}
 
@@ -490,7 +589,7 @@ class SuperEzioAgent:
             prompt = (
                 f'Classifique a intenção do usuário e responda APENAS JSON.\n'
                 f'Entrada: "{user_input}"\n'
-                '{"tipo":"automation|research|code_modification|general","confidence":0.0}'
+                '{"tipo":"automation|research|code_modification|capability_question|general","confidence":0.0}'
             )
             raw = await self.call_ollama("reasoning", prompt, "Você é um classificador de intenções. Responda só JSON.")
             intent = _extract_json_loose(raw) or {"tipo": "general", "confidence": 0.5}
@@ -510,6 +609,8 @@ class SuperEzioAgent:
                 cmd = parts[0]
                 args = parts[1] if len(parts) > 1 else ""
                 return await self.command_registry.dispatch(cmd, args)
+            elif t == "capability_question":
+                return self.command_registry._capabilities_handler("")
             elif t in ("automation", "research"):
                 if "auto_research" in self.command_registry.commands:
                     return await self.command_registry.dispatch("auto_research", user_input)
