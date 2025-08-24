@@ -347,7 +347,69 @@ async def handle_help_command():
 @with_correlation("natural_language_processing")
 async def process_natural_language(user_input: str, session_data: Dict[str, Any]):
     """Processa linguagem natural usando o streamer enterprise."""
-    response_content = f"""🤖 **SUPEREZIO Enterprise Response:**
+    
+    # Detecção de perguntas sobre capacidades
+    user_lower = user_input.lower()
+    capability_keywords = [
+        "o que você", "o que vc", "what can you", "what are you capable",
+        "capacidades", "capabilities", "que você faz", "que vc faz",
+        "o que pode fazer", "what do you do", "funcionalidades",
+        "que consegue", "pode fazer", "sabe fazer"
+    ]
+    
+    if any(keyword in user_lower for keyword in capability_keywords):
+        # Return comprehensive capability explanation
+        response_content = f"""# 🌟 SUPEREZIO Enterprise - Capacidades Completas
+
+## 🤖 **AUTOMAÇÃO ENTERPRISE**
+- **Web Automation**: Selenium WebDriver para navegação avançada
+- **Desktop Control**: PyAutoGUI para controle completo do sistema
+- **Research Engine**: Pesquisa multi-fonte com análise inteligente
+- **File Operations**: Gestão cross-platform de arquivos e diretórios
+
+## 💻 **DESENVOLVIMENTO & CÓDIGO**
+- **Geração de Código**: Múltiplas linguagens (Python, JS, Java, C++)
+- **Debug Especializado**: Análise e solução automática de problemas
+- **Refatoração**: Otimização inteligente de código existente
+- **Documentação**: Geração automática de docs técnicas
+
+## 🧠 **ANÁLISE DE DADOS & IA**
+- **Machine Learning**: Pandas, NumPy, Scikit-learn integration
+- **Image Processing**: OpenCV, PIL para manipulação visual
+- **API Integration**: REST, GraphQL, webhooks automáticos
+- **Big Data**: Processamento otimizado de grandes volumes
+
+## 🚀 **ARQUITETURA ENTERPRISE**
+- **Async-First**: Performance otimizada para milhares de operações
+- **Circuit Breakers**: Proteção contra falhas em cascata
+- **Intelligent Caching**: LRU com TTL para respostas rápidas
+- **Rate Limiting**: Controle de uso e proteção contra sobrecarga
+- **Structured Logging**: Rastreamento distribuído com correlation IDs
+- **Health Monitoring**: Endpoints para monitoramento em tempo real
+- **Session Management**: Estado persistente e contexto avançado
+
+## ⚡ **COMANDOS PRINCIPAIS**
+- `/auto_status` - Status completo do sistema e hardware
+- `/auto_research <tópico>` - Pesquisa profunda multi-fonte
+- `/auto_search <termo>` - Busca avançada na web
+- `/config` - Configurações enterprise detalhadas
+- `/health` - Diagnóstico completo do sistema
+- `/metrics` - Métricas de performance da sessão
+- `/help` - Lista completa de comandos
+
+## 💾 **HARDWARE OTIMIZADO**
+- **Multi-GPU**: RTX 3060 (12GB) + RTX 2060 (6GB) = 18GB VRAM
+- **Load Balancing**: Distribuição automática de carga
+- **Memory Management**: Gestão inteligente de recursos
+- **Quantization**: Suporte para modelos grandes
+
+---
+
+**🚀 O SUPEREZIO Enterprise é sua plataforma cognitiva completa para automação, desenvolvimento e análise de dados em nível empresarial!**
+
+*Experimente: `/auto_research "Python automation best practices 2025"`*"""
+    else:
+        response_content = f"""🤖 **SUPEREZIO Enterprise Response:**
 
 Entendi sua mensagem: "{user_input[:100]}{'...' if len(user_input) > 100 else ''}"
 
@@ -355,6 +417,7 @@ Para uma resposta mais elaborada, eu usaria um modelo de linguagem avançado, pr
 
 Como posso ajudá-lo a usar as capacidades enterprise?
 """
+    
     if settings.chainlit.debug: # Exemplo de uso da config
         await streamer.stream_message(session_id.get(), response_content)
     else:
