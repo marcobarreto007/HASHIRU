@@ -10,6 +10,8 @@ from pydantic import BaseModel, Field
 from enum import Enum
 from typing import List
 
+from api.experts.base import ExpertDefinition
+
 class SentimentEnum(str, Enum):
     """Enumeração dos possíveis sentimentos de mercado."""
     BULLISH = "BULLISH"
@@ -88,3 +90,11 @@ Realize uma análise de sentimento de mercado para o ticker **{ticker}**. Com ba
 
 Agora, execute a análise para o ticker `{ticker}` com base na seguinte consulta do usuário: "{query}"
 """
+
+# Definição do expert para ser descoberto pelo orquestrador
+expert_definition = ExpertDefinition(
+    name="sentiment",
+    prompt_template=SENTIMENT_ANALYSIS_PROMPT_TEMPLATE,
+    response_model=SentimentAnalysisSignal,
+    model_name="prosusai/finbert"  # Modelo especialista em sentimento financeiro
+)
